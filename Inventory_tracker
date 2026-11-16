@@ -1,0 +1,27 @@
+
+
+
+
+def AddItem(paramUserItem, paramUserAmount):
+    userInput = input("enter the item you want to add:")
+    while paramUserItem != "done":
+
+        myList.append(paramUserItem)
+        myList.append(paramUserAmount)
+        
+        
+    return myList
+
+
+
+
+
+
+myList = []
+userInput = input("enter the item you want to add:")
+itemAmount = int(input("enter the item amount:"))
+myItem = AddItem(userInput, itemAmount)
+print(myItem)
+
+
+
