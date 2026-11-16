@@ -1,28 +1,65 @@
 
 
 
-
-def AddItem(paramItem, paramAmount):
+#-------add item function-------
+def AddItem(paramItem):
     myList = []
     while paramItem != "done":
         myList.append(paramItem)
-        myList.append(paramAmount)
         print(myList)
         paramItem = input("enter the item you want to add:")
-        if paramItem != "done":
-            paramAmount = int(input("enter the amount of the item:"))
+      
+
     return myList
 
 
 
 
-
+            
 
 
 userInput = input("enter the item you want to add:")
-itemAmount = int(input("enter the item amount:"))
-myItem = AddItem(userInput, itemAmount)
+myItem = AddItem(userInput)
 print(myItem)
 
 
 
+
+#-------------Orginal--------------
+
+#def AddItem(paramItem, paramAmount):
+    #myList = []
+    #while paramItem != "done":
+        #myList.append(paramItem)
+        #myList.append(paramAmount)
+        #print(myList)
+        #paramItem = input("enter the item you want to add:")
+        #if paramItem != "done":
+            #paramAmount = int(input("enter the amount of the item:"))
+    #return myList
+
+
+
+
+
+
+
+#userInput = input("enter the item you want to add:")
+#itemAmount = int(input("enter the item amount:"))
+#myItem = AddItem(userInput, itemAmount)
+#print(myItem)
+
+
+
+
+#future remove function
+
+#if paramItem != "done":
+            #itemRemove = input("do you want to remove an item y/n?:")
+            #if itemRemove == "y":
+                #myRemove = input("enter the item you want to remove:")
+                #myList.remove(myRemove)
+                #return myList
+            #else:
+                #paramItem = input("enter the item you want to add:")
+                #return myList
