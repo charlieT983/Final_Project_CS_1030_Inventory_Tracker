@@ -7,7 +7,7 @@ def RemoveItem(paramList, paramItem):
             if entry[1] > 1:
                 print("you have", entry[1], paramItem + ". how many do want to remove?")
                 localAmount = ItemAmount(paramItem)
-                while localAmount > entry[1]:
+                while localAmount > entry[1]:       #can't remove more than you have
                     print("you only have", entry[1], paramItem)
                     localAmount = ItemAmount(paramItem)
                 entry[1] = entry[1] - localAmount
@@ -17,7 +17,7 @@ def RemoveItem(paramList, paramItem):
                 else:
                     print(localAmount, paramItem, "was removed. you now have", entry[1])
             else:
-                paramList.remove(entry)
+                paramList.remove(entry)               #if you only have one left it will remove it completely 
                 print(paramItem, "was removed")
             return paramList
     print(paramItem, "is not in the inventory")
@@ -48,10 +48,35 @@ def ItemAmount(paramItem):
         localAmount = input("enter the amount of " + paramItem + ":")
     return int(localAmount)    #turns the value into an integer
 
-            
+
+#------Set Low Amount------------
+def SetLowAmount():
+    localLow = input("at what amount is an item considered low in stock?:")
+    while not localLow.isdigit():
+        print("please enter a number")
+        localLow = input("at what amount is an item considered low in stock?:")
+    return int(localLow)
+
+
+
+#------------Check Low Stock-------------------
+def CheckLowStock(paramList, paramLowAmount):
+    foundLow = False
+    for entry in paramList:
+        if entry[1] <= paramLowAmount:
+            print(entry[0], "is low in stock. you only have", entry[1])
+            foundLow = True
+    if foundLow == False:
+        print("nothing is low in stock")
+
+
+
+
+
 #----------Main--------------
 myList = []
-userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+lowAmount = SetLowAmount()
+userChoice = input("Do you want to add, remove, or check what is low? (add/remove/low/done):".lower())
 
 while userChoice != "done":
     if userChoice == "add":
@@ -61,11 +86,13 @@ while userChoice != "done":
     elif userChoice == "remove":
         item = input("enter the item you want to remove:")
         myList = RemoveItem(myList, item)
+    elif userChoice == "low":
+        CheckLowStock(myList, lowAmount)
     else:
         print("please type done or (add), (remove)")
 
     print("Inventory:", myList)
-    userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+    userChoice = input("Do you want to add, remove, or check? (add/remove/low/done):".lower())
 
 print("Final Inventory:", myList)
 
