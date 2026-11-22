@@ -2,44 +2,86 @@
 
 #---------Remove item Functin--------------
 def RemoveItem(paramList, paramItem):
-    
-    if paramItem in paramList:
-        paramList.remove(paramItem)
-        print(paramItem, "was removed")
-    else:
-        print(paramItem, "Is not in the inventory")
+    for entry in paramList:
+        if entry[0] == paramItem:
+            if entry[1] > 1:
+                print("you have", entry[1], paramItem + ". how many do want to remove?")
+                localAmount = ItemAmount(paramItem)
+                while localAmount > entry[1]:
+                    print("you only have", entry[1], paramItem)
+                    localAmount = ItemAmount(paramItem)
+                entry[1] = entry[1] - localAmount
+                if entry[1] == 0:
+                    paramList.remove(entry)
+                    print("all of the", paramItem, "was removed")
+                else:
+                    print(localAmount, paramItem, "was removed. you now have", entry[1])
+            else:
+                paramList.remove(entry)
+                print(paramItem, "was removed")
+            return paramList
+    print(paramItem, "is not in the inventory")
     return paramList
 
 
 
 
-#-------add item function-------
-def AddItem(paramList, paramItem):
+#-------Add item function-------
+def AddItem(paramList, paramItem, paramAmount):
+    for entry in paramList:
+        if entry[0] == paramItem:
+            entry[1] = entry[1] + paramAmount
+            print(paramAmount, "more", paramItem, "added. you now have", entry[1])
+            return paramList
+    paramList.append([paramItem, paramAmount])
+    print(paramAmount, paramItem, "was added")
+    return paramList
     
-    paramList.append(paramItem)
-    print(paramItem, "was added")
         
-    return paramList
 
 
-
+#------Item Amount---------
+def ItemAmount(paramItem):
+    localAmount = input("enter the amount of " + paramItem + ":")
+    while not localAmount.isdigit():            #this checks if the amount entered is a digit
+        print("Please enter a whole number")
+        localAmount = input("enter the amount of " + paramItem + ":")
+    return int(localAmount)    #turns the value into an integer
 
             
-
+#----------Main--------------
 myList = []
 userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+
 while userChoice != "done":
     if userChoice == "add":
         item = input("enter the item you want to add:")
-        myList = AddItem(myList, item)
+        amount = ItemAmount(item)
+        myList = AddItem(myList, item, amount)
     elif userChoice == "remove":
         item = input("enter the item you want to remove:")
         myList = RemoveItem(myList, item)
     else:
         print("please type done or (add), (remove)")
+
     print("Inventory:", myList)
     userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+
 print("Final Inventory:", myList)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
