@@ -1,5 +1,19 @@
 
 
+#---------Remove item Functin--------------
+def RemoveItem(paramAnswer, paramItem):
+    localList = []
+    while paramAnswer != "done":
+        if paramAnswer == "yes":
+            localList.remove(paramItem)
+        elif paramAnswer == "no":
+            userInput = input("do you want to add an item?:")
+            itemAdd = AddItem(userInput)
+            return myList
+    return localList
+        
+
+
 
 #-------add item function-------
 def AddItem(paramItem):
@@ -17,7 +31,7 @@ def AddItem(paramItem):
 
             
 
-
+myList = []
 userInput = input("enter the item you want to add:")
 myItem = AddItem(userInput)
 print(myItem)
