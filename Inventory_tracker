@@ -1,30 +1,25 @@
 
 
 #---------Remove item Functin--------------
-def RemoveItem(paramAnswer, paramItem):
-    localList = []
-    while paramAnswer != "done":
-        if paramAnswer == "yes":
-            localList.remove(paramItem)
-        elif paramAnswer == "no":
-            userInput = input("do you want to add an item?:")
-            itemAdd = AddItem(userInput)
-            return myList
-    return localList
-        
+def RemoveItem(paramList, paramItem):
+    
+    if paramItem in paramList:
+        paramList.remove(paramItem)
+        print(paramItem, "was removed")
+    else:
+        print(paramItem, "Is not in the inventory")
+    return paramList
+
 
 
 
 #-------add item function-------
-def AddItem(paramItem):
-    myList = []
-    while paramItem != "done":
-        myList.append(paramItem)
-        print(myList)
-        paramItem = input("enter the item you want to add:")
-      
-
-    return myList
+def AddItem(paramList, paramItem):
+    
+    paramList.append(paramItem)
+    print(paramItem, "was added")
+        
+    return paramList
 
 
 
@@ -32,10 +27,19 @@ def AddItem(paramItem):
             
 
 myList = []
-userInput = input("enter the item you want to add:")
-myItem = AddItem(userInput)
-print(myItem)
-
+userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+while userChoice != "done":
+    if userChoice == "add":
+        item = input("enter the item you want to add:")
+        myList = AddItem(myList, item)
+    elif userChoice == "remove":
+        item = input("enter the item you want to remove:")
+        myList = RemoveItem(myList, item)
+    else:
+        print("please type done or (add), (remove)")
+    print("Inventory:", myList)
+    userChoice = input("Do you want to add or remove an item? (add/remove/done):".lower())
+print("Final Inventory:", myList)
 
 
 
