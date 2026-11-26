@@ -1,4 +1,4 @@
-
+import csv
 
 #---------Remove item Functin--------------
 def RemoveItem(paramList, paramItem):
@@ -71,10 +71,40 @@ def CheckLowStock(paramList, paramLowAmount):
 
 
 
+#------------Load inventory----------
+def LoadInventory(paramFileName):
+    localList = []
+    try:          #this tries the indented code and if FileNot FoundError then it will jump straight to the except
+        with open(paramFileName, "r", newline="") as file:          #opens the file for reading. with just closes the file automatically
+            #newline lets the csv module handle line endings itself. which you need on windows 
+            #reader = csv.reader(file) makes a reader that goes through the file one row at a time
+            reader = csv.reader(file)
+            next(reader)        #next(reader) moves the reader past the first rowwithout using it.
+
+            for row in reader: #this loops through every rowafter the header.
+                if len(row) >= 2 and row[0] != "": #this only uses a row if it has at least 2 columns and the name isn't blank
+                    localList.append([row[0], int(row[1])])
+    except FileNotFoundError:   #this only runs if the file doesn't exist, this happens when you first run the code because the list is blank
+        #note: using "try" you need a except. if you don't have that then the code won't run 
+        print("no inventory file found, starting with an empty inventory")
+    return localList
+
+#--------------Save Inventory----------
+def SaveInventory(paramList, paramFileName):
+    with open(paramFileName, "w", newline="") as file: # opens the file for writing. This creates the file if it doesn't exist
+        #if it does exist then it will erase the old contents first
+        writer = csv.writer(file)   # this makes a writer that turns lists into comma separated lines in the file 
+        writer.writerow(["item", "amount"])     # this writes the header row. these become the column titles in excel 
+        for entry in paramList: # this for loops through each item and amount in the inventory 
+            writer.writerow(entry)  #this writes one item as one row
+    print("inventory Saved to",paramFileName)
+# there is no return because this just saves the content into the file 
+
 
 
 #----------Main--------------
-myList = []
+myList = LoadInventory("inventory.csv")
+print("Inventory:", myList)
 lowAmount = SetLowAmount()
 userChoice = input("Do you want to add, remove, or check what is low? (add/remove/low/done):".lower())
 
@@ -94,6 +124,7 @@ while userChoice != "done":
     print("Inventory:", myList)
     userChoice = input("Do you want to add, remove, or check? (add/remove/low/done):".lower())
 
+SaveInventory(myList, "inventory.csv")
 print("Final Inventory:", myList)
 
 
@@ -112,41 +143,3 @@ print("Final Inventory:", myList)
 
 
 
-#-------------Orginal--------------
-
-#def AddItem(paramItem, paramAmount):
-    #myList = []
-    #while paramItem != "done":
-        #myList.append(paramItem)
-        #myList.append(paramAmount)
-        #print(myList)
-        #paramItem = input("enter the item you want to add:")
-        #if paramItem != "done":
-            #paramAmount = int(input("enter the amount of the item:"))
-    #return myList
-
-
-
-
-
-
-
-#userInput = input("enter the item you want to add:")
-#itemAmount = int(input("enter the item amount:"))
-#myItem = AddItem(userInput, itemAmount)
-#print(myItem)
-
-
-
-
-#future remove function
-
-#if paramItem != "done":
-            #itemRemove = input("do you want to remove an item y/n?:")
-            #if itemRemove == "y":
-                #myRemove = input("enter the item you want to remove:")
-                #myList.remove(myRemove)
-                #return myList
-            #else:
-                #paramItem = input("enter the item you want to add:")
-                #return myList
