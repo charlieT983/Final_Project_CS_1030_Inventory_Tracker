@@ -18,3 +18,6 @@
 ## Some Issues I ran into 
 - You might have to run the program twice in order for it to show you the csv file
 - Sometimes the file won't show up in your folder
+
+## Where I learned the CSV module 
+- https://www.w3schools.com/python/ref_module_csv.asp
